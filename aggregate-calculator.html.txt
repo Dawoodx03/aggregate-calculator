@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAST NUCES Aggregate Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>FAST NUCES Aggregate Calculator</h2>
+
+    <form id="aggregate-form">
+        <label for="intermediate-marks">Intermediate Marks (Out of 1100):</label>
+        <input type="number" id="intermediate-marks" required>
+
+        <label for="ecat-marks">ECAT Marks (Out of 400):</label>
+        <input type="number" id="ecat-marks" required>
+
+        <label for="matric-marks">Matriculation Marks (Out of 1100):</label>
+        <input type="number" id="matric-marks" required>
+
+        <button type="button" onclick="calculateAggregate()">Calculate Aggregate</button>
+    </form>
+
+    <div id="result" class="result" style="display: none;"></div>
+</div>
+
+<script>
+    function calculateAggregate() {
+        // Get values from inputs
+        var intermediateMarks = parseFloat(document.getElementById('intermediate-marks').value);
+        var ecatMarks = parseFloat(document.getElementById('ecat-marks').value);
+        var matricMarks = parseFloat(document.getElementById('matric-marks').value);
+
+        // Validate input values
+        if (isNaN(intermediateMarks) || isNaN(ecatMarks) || isNaN(matricMarks)) {
+            alert("Please enter valid numbers for all fields.");
+            return;
+        }
+
+        // Weights for each component
+        var intermediateWeight = 0.30;
+        var ecatWeight = 0.50;
+        var matricWeight = 0.20;
+
+        // Max marks for each component
+        var maxIntermediateMarks = 1100;
+        var maxEcatMarks = 400;
+        var maxMatricMarks = 1100;
+
+        // Calculate normalized marks
+        var normalizedIntermediate = (intermediateMarks / maxIntermediateMarks) * 100;
+        var normalizedEcat = (ecatMarks / maxEcatMarks) * 100;
+        var normalizedMatric = (matricMarks / maxMatricMarks) * 100;
+
+        // Calculate weighted aggregate
+        var aggregate = (normalizedIntermediate * intermediateWeight) +
+                        (normalizedEcat * ecatWeight) +
+                        (normalizedMatric * matricWeight);
+
+        // Display the result
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('result').innerHTML = "Your FAST NUCES Aggregate is: " + aggregate.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
+
